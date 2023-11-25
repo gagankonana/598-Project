@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voter Page</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+      background: url('back.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    
+    .container {
+      width: 750px;
+      max-width: 900px;
+      background-color: rgba(0, 0, 0, 0.650);
+      padding: 40px 40px 2% 40px;
+      border-radius: 5px;
+      box-shadow: 0px 3px 10px rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+    
+    h1 {
+      font-size: 32px;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+    
+    h2 {
+      font-size: 25px;
+      color: #ffffff;
+      margin-bottom: 25px;
+    }
+    
+    h3, p {
+      color: #ffffff;
+    }
+    
+    .table {
+      width: 100%;
+      margin-bottom: 20px;
+      background-color: rgba(124, 123, 123, 0.65);
+      border-radius: 5px;
+      border-collapse: separate;
+      border-spacing: 25px;
+    }
+    
+    th {
+      font-size: 18px;
+      color: #ffffff;
+    }
+    
+    td {
+      font-size: 16px;
+      color: #ffffff;
+      row-gap: 100%;
+    }
+    
+    #voteButton {
+      width: 40%;
+      padding: 12px;
+      background-color: #198a7b;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 19px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    #voteButton:hover {
+      background-color: #44afa1;
+    }
+    
+    #voteButton:focus {
+      outline: none;
+    }
+    
+    #voteButton:active {
+      transform: translateY(2px);
+    }
+    
+    #accountAddress {
+      font-size: 18px;
+      color: #ffffff;
+      margin-top: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+    <div id="head" style="text-align: center;">
+        <h1 style="margin-bottom: 30px;">Voting App using Ethereum</h1>
+        <h2>Eth-Voter</h2> 
+        <h3>Voting Dates: <span id="dates"></span></h3>
+        <br/> 
+      </div>
+      <div id="candidate" class="container"> 
+        <table class="table" style="text-align: center;">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Party</th>
+              <th>Total Votes</th>
+            </tr>
+          </thead>
+          <tbody id="boxCandidate"></tbody>
+        </table>
+        <br/>
+        <div id="vote">
+          <p>Please select a candidate and choose vote.</p>
+          <button id="voteButton" class="btn btn-primary" onclick="App.vote()" disabled>Vote</button>
+          <div id="msg"></div>
+          <div id="vote-box"></div>
+        </div>
+      </div>
+      
+      <div id="account" style="text-align: center;">
+        <p id="accountAddress"></p>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+      <script src="../dist/app.bundle.js" type="module"></script>      
+</body>
+</html>
