@@ -1,54 +1,55 @@
+
 pragma solidity ^0.5.15;
 
-contract VotingSystem {
+contract Voting {
     struct Candidate {
-        uint identifier;
-        string fullName;
-        string politicalParty; 
-        uint voteTally;
+        uint id;
+        string name;
+        string party; 
+        uint voteCount;
     }
 
-    mapping (uint => Candidate) public nominees;
+    mapping (uint => Candidate) public candidates;
     mapping (address => bool) public voters;
 
-    uint public totalCandidates;
-    uint256 public endVotingPeriod;
-    uint256 public startVotingPeriod;
+    
+    uint public countCandidates;
+    uint256 public votingEnd;
+    uint256 public votingStart;
 
-    function enlistCandidate(string memory name, string memory party) public returns(uint) {
-        totalCandidates++;
-        nominees[totalCandidates] = Candidate(totalCandidates, name, party, 0);
-        return totalCandidates;
+
+    function addCandidate(string memory name, string memory party) public  returns(uint) {
+               countCandidates ++;
+               candidates[countCandidates] = Candidate(countCandidates, name, party, 0);
+               return countCandidates;
     }
+   
+    function vote(uint candidateID) public {
 
-    function getCandidateDetails(uint candidateID) public view returns (uint, string memory, string memory, uint) {
-        return (candidateID, nominees[candidateID].fullName, nominees[candidateID].politicalParty, nominees[candidateID].voteTally);
+              
+       voters[msg.sender] = true;
+       
+       candidates[candidateID].voteCount ++;      
     }
-
-    function getCandidatesCount() public view returns(uint) {
-        return totalCandidates;
-    }
-
-    function castVote(uint candidateID) public {
-        require((startVotingPeriod <= now) && (endVotingPeriod > now), "Voting is inactive.");
-        require(candidateID > 0 && candidateID <= totalCandidates, "Invalid candidate ID.");
-        require(!voters[msg.sender], "You have already voted.");
-
-        voters[msg.sender] = true;
-        nominees[candidateID].voteTally++;
-    }
-
-    function hasVoted() public view returns(bool) {
+    
+    function checkVote() public view returns(bool){
         return voters[msg.sender];
     }
-
-    function setVotingDates(uint256 _startDate, uint256 _endDate) public {
-        require((endVotingPeriod == 0) && (startVotingPeriod == 0) && (_startDate + 1000000 > now) && (_endDate > _startDate), "Invalid date settings.");
-        endVotingPeriod = _endDate;
-        startVotingPeriod = _startDate;
+       
+    function getCountCandidates() public view returns(uint) {
+        return countCandidates;
     }
 
-    function getVotingDates() public view returns (uint256, uint256) {
-        return (startVotingPeriod, endVotingPeriod);
+    function getCandidate(uint candidateID) public view returns (uint,string memory, string memory,uint) {
+        return (candidateID,candidates[candidateID].name,candidates[candidateID].party,candidates[candidateID].voteCount);
+    }
+
+    function setDates(uint256 _startDate, uint256 _endDate) public{
+        votingEnd = _endDate;
+        votingStart = _startDate;
+    }
+
+    function getDates() public view returns (uint256,uint256) {
+      return (votingStart,votingEnd);
     }
 }
